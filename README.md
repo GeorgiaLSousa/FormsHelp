@@ -95,29 +95,27 @@ O projeto foi desenvolvido utilizando Windows Forms, SQLite e arquitetura em cam
 ### 👤 Cliente
 
 - Realizar login
+ <img width="1144" height="653" alt="image" src="https://github.com/user-attachments/assets/b3de1129-9242-4d09-959d-afef9b9babb7" />
+
 - Cadastrar novo usuário
+  <img width="1167" height="656" alt="image" src="https://github.com/user-attachments/assets/353106f6-8fcd-4208-94aa-dc57da8df8f6" />
+
 - Abrir chamados
+  <img width="1166" height="653" alt="image" src="https://github.com/user-attachments/assets/cf79cf55-b762-4f26-8338-bbd3efe09665" />
+
 - Acompanhar chamados
-- Filtrar chamados por status
+  <img width="1002" height="556" alt="image" src="https://github.com/user-attachments/assets/c8f57170-11d4-44f6-b561-db028633e8f5" />
 
 ### 🛠️ Analista
 
 - Visualizar chamados
-- Filtrar chamados
-- Atualizar informações do chamado
+  <img width="990" height="558" alt="image" src="https://github.com/user-attachments/assets/ac65b310-be5f-45f5-9913-630793aff16c" />
+
+- Visualizar informações do chamado
+  <img width="996" height="557" alt="image" src="https://github.com/user-attachments/assets/432c707a-3432-4f60-bdd7-3ce28fa2f87c" />
+
 - Alterar status do atendimento
-
----
-
-## 🖥️ Telas do Sistema
-
-- Login
-- Novo Usuário
-- Dashboard Cliente
-- Dashboard Analista
-- Novo Chamado
-- Detalhes do Chamado
-- Atualizar Chamado
+<img width="957" height="534" alt="image" src="https://github.com/user-attachments/assets/3d1696b9-3264-47fc-98d8-b7868b346cee" />
 
 ---
 
