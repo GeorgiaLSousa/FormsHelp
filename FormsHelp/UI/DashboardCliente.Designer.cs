@@ -127,7 +127,7 @@
             cmbStatus.FlatStyle = FlatStyle.Flat;
             cmbStatus.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cmbStatus.FormattingEnabled = true;
-            cmbStatus.Items.AddRange(new object[] { "Todos os status", "Aberto", "Em progresso", "Fechado" });
+            cmbStatus.Items.AddRange(new object[] { "Todos os status" });
             cmbStatus.Location = new Point(35, 159);
             cmbStatus.Margin = new Padding(3, 2, 3, 2);
             cmbStatus.Name = "cmbStatus";

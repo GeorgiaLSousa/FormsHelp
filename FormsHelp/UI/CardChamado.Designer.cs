@@ -118,7 +118,7 @@
             btnVerDetalhes.FlatStyle = FlatStyle.Flat;
             btnVerDetalhes.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnVerDetalhes.ForeColor = Color.White;
-            btnVerDetalhes.Location = new Point(986, 77);
+            btnVerDetalhes.Location = new Point(986, 79);
             btnVerDetalhes.Name = "btnVerDetalhes";
             btnVerDetalhes.Size = new Size(91, 26);
             btnVerDetalhes.TabIndex = 6;

@@ -22,7 +22,26 @@ namespace FormsHelp.Data
 			}
 		}
 
-		public DbSet<Usuario> Usuarios { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Esta linha força o EF Core a converter o Enum em texto na hora de salvar e ler do banco
+            modelBuilder.Entity<Chamado>()
+                .Property(c => c.Categoria)
+                .HasConversion<string>();
+
+            // Aproveite e faça o mesmo para a Prioridade e Status se eles também salvarem como texto
+            modelBuilder.Entity<Chamado>()
+                .Property(c => c.Prioridade)
+                .HasConversion<string>();
+
+            modelBuilder.Entity<Chamado>()
+                .Property(c => c.Status)
+                .HasConversion<string>();
+        }
+
+        public DbSet<Usuario> Usuarios { get; set; }
 
 		public DbSet<Categoria> Categorias { get; set; }
 

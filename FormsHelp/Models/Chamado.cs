@@ -47,8 +47,8 @@ namespace FormsHelp.Models
 
     public enum Setor
     {
-        Suporte,
-        Desenvolvimento,
+        Hardware,
+        Sistema,
         Infraestrutura,
         Redes,
         Bug

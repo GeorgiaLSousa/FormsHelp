@@ -89,6 +89,8 @@ namespace FormsHelp.UI
                 txbDescricao.Clear();
                 cmbPrioridade.SelectedIndex = -1;
                 cmbCategoria.SelectedIndex = -1;
+
+
             }
             catch (Exception ex)
             {
