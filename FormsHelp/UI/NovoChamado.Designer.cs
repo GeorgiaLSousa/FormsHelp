@@ -170,7 +170,7 @@
             // cmbCategoria
             // 
             cmbCategoria.FormattingEnabled = true;
-            cmbCategoria.Items.AddRange(new object[] { "Sistema", "Hardware", "Rede", "Software", "Acesso", "Outro" });
+            cmbCategoria.Items.AddRange(new object[] { "Hardware", "Sistema", "Infraestrutura", "Redes", "Bug"});
             cmbCategoria.Location = new Point(65, 303);
             cmbCategoria.Name = "cmbCategoria";
             cmbCategoria.Size = new Size(351, 23);
@@ -179,7 +179,7 @@
             // cmbPrioridade
             // 
             cmbPrioridade.FormattingEnabled = true;
-            cmbPrioridade.Items.AddRange(new object[] { "Baixa", "Média", "Alta", "Urgente" });
+            cmbPrioridade.Items.AddRange(new object[] { "Baixa", "Media", "Alta"});
             cmbPrioridade.Location = new Point(65, 233);
             cmbPrioridade.Name = "cmbPrioridade";
             cmbPrioridade.Size = new Size(351, 23);

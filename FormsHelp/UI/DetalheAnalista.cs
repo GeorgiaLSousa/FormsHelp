@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FormsHelp.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,19 +11,61 @@ namespace FormsHelp.UI
 {
     public partial class DetalheAnalista : Form
     {
-        public DetalheAnalista()
+        private readonly ChamadoService _chamadoService;
+        private long _idChamado; // 📌 Variável que armazena o ID enviado pelo Card
+        public DetalheAnalista(ChamadoService chamadoService)
         {
             InitializeComponent();
+            _chamadoService = chamadoService;
+        }
+
+        public void MapearIdChamado(long id)
+        {
+            _idChamado = id;
         }
 
         private void DetalheAnalista_Load(object sender, EventArgs e)
         {
+            if (_idChamado <= 0) return;
 
+            try
+            {
+                // Busca o chamado completo no banco através do ID usando o seu Service
+                var chamado = _chamadoService.DetalhesChamado(_idChamado);
+
+                // 📌 Preenche os componentes do painel esquerdo com os dados reais do banco
+                label11.Text = chamado.Titulo;
+                label14.Text = chamado.Descricao;
+                label16.Text = chamado.Solicitante?.Nome ?? "Sem solicitante";
+                label18.Text = chamado.DataAbertura.ToString("dd/MM/yyyy 'às' HH:mm");
+                label20.Text = chamado.Categoria.ToString();
+
+                label22.Text = chamado.Analista?.Nome ?? "Aguardando Analista...";
+                label24.Text = chamado.DataAtualizacao.ToString("dd/MM/yyyy 'às' HH:mm");
+
+                // 📌 Preenche as labels informativas do painel lateral direito
+                label7.Text = chamado.Status.ToString();
+                label8.Text = chamado.Prioridade.ToString();
+                label4.Text = chamado.Status.ToString();
+                label5.Text = chamado.Prioridade.ToString();
+
+                // Desativa o botão de assumir caso um analista já seja dono dele
+                if (chamado.Analista != null)
+                {
+                    btnAssumir.Enabled = false;
+                    btnAssumir.Text = "Chamado em Atendimento";
+                    btnAssumir.BackColor = Color.Gray;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao carregar dados do chamado: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
-
+            this.Close(); // Fecha a tela de detalhes e volta para o Dashboard
         }
 
         private void panel2_Paint(object sender, PaintEventArgs e)
@@ -149,6 +192,11 @@ namespace FormsHelp.UI
         }
 
         private void label29_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label8_Click(object sender, EventArgs e)
         {
 
         }

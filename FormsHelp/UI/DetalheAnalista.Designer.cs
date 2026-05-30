@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DetalheAnalista));
             panel1 = new Panel();
             label9 = new Label();
             pictureBox2 = new PictureBox();
@@ -124,7 +123,6 @@
             // 
             // pictureBox2
             // 
-            pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
             pictureBox2.Location = new Point(1285, 12);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(59, 40);
@@ -135,7 +133,6 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(28, 12);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(30, 50);
@@ -281,7 +278,6 @@
             // 
             // pictureBox8
             // 
-            pictureBox8.Image = (Image)resources.GetObject("pictureBox8.Image");
             pictureBox8.Location = new Point(24, 404);
             pictureBox8.Name = "pictureBox8";
             pictureBox8.Size = new Size(23, 37);
@@ -292,7 +288,6 @@
             // 
             // pictureBox7
             // 
-            pictureBox7.Image = (Image)resources.GetObject("pictureBox7.Image");
             pictureBox7.Location = new Point(506, 333);
             pictureBox7.Name = "pictureBox7";
             pictureBox7.Size = new Size(23, 26);
@@ -301,7 +296,6 @@
             // 
             // pictureBox6
             // 
-            pictureBox6.Image = (Image)resources.GetObject("pictureBox6.Image");
             pictureBox6.Location = new Point(26, 333);
             pictureBox6.Name = "pictureBox6";
             pictureBox6.Size = new Size(23, 26);
@@ -311,7 +305,6 @@
             // 
             // pictureBox5
             // 
-            pictureBox5.Image = (Image)resources.GetObject("pictureBox5.Image");
             pictureBox5.Location = new Point(504, 263);
             pictureBox5.Name = "pictureBox5";
             pictureBox5.Size = new Size(25, 35);
@@ -322,7 +315,6 @@
             // 
             // pictureBox4
             // 
-            pictureBox4.Image = (Image)resources.GetObject("pictureBox4.Image");
             pictureBox4.Location = new Point(24, 263);
             pictureBox4.Name = "pictureBox4";
             pictureBox4.Size = new Size(25, 35);
@@ -395,9 +387,9 @@
             // 
             panel12.BackColor = Color.White;
             panel12.Controls.Add(label8);
-            panel12.Location = new Point(751, 70);
+            panel12.Location = new Point(716, 70);
             panel12.Name = "panel12";
-            panel12.Size = new Size(68, 28);
+            panel12.Size = new Size(103, 28);
             panel12.TabIndex = 2;
             panel12.Paint += panel5_Paint;
             // 
@@ -405,12 +397,13 @@
             // 
             label8.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label8.ForeColor = Color.FromArgb(164, 0, 0);
-            label8.Location = new Point(-35, 2);
+            label8.Location = new Point(15, 0);
             label8.Name = "label8";
             label8.Size = new Size(68, 28);
             label8.TabIndex = 0;
             label8.Text = "Alta";
             label8.TextAlign = ContentAlignment.MiddleCenter;
+            label8.Click += label8_Click;
             // 
             // panel11
             // 
@@ -505,7 +498,6 @@
             // 
             // pictureBox3
             // 
-            pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
             pictureBox3.Location = new Point(12, 74);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(100, 50);

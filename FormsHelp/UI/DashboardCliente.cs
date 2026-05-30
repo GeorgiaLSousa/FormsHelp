@@ -41,7 +41,11 @@ namespace FormsHelp.UI
 
         private void DashboardCliente_Load(object sender, EventArgs e)
         {
+            cmbStatus.Items.Clear();
+            cmbStatus.Items.AddRange(new object[] { "Todos os chamados" });
             cmbStatus.SelectedIndex = 0;
+
+            // Amarração do evento de trava direto por código para evitar mexer no Designer
             this.ActiveControl = lbTituloPagina;
             AjustarCards();
             CarregarChamados();
