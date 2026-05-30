@@ -91,13 +91,15 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(16, 8);
+            pictureBox1.Image = Properties.Resources._2;
+            pictureBox1.Location = new Point(-16, 1);
             pictureBox1.Margin = new Padding(2, 1, 2, 1);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(105, 39);
+            pictureBox1.Size = new Size(106, 51);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
             // 
             // TB_Nome
             // 
@@ -242,6 +244,7 @@
             // 
             // pictureBox2
             // 
+            pictureBox2.Image = Properties.Resources._1;
             pictureBox2.Location = new Point(83, 184);
             pictureBox2.Margin = new Padding(2, 1, 2, 1);
             pictureBox2.Name = "pictureBox2";

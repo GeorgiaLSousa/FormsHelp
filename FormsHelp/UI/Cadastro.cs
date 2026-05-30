@@ -1,5 +1,7 @@
 ﻿using FormsHelp.Models;
 using FormsHelp.Services;
+using FormsHelp.Sessao; // 📌 Adicionado para gerenciar a sessão do usuário logado
+using Microsoft.Extensions.DependencyInjection; // 📌 Adicionado para usar o GetRequiredService
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,6 +18,7 @@ namespace FormsHelp.UI
         [System.Runtime.InteropServices.DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn(int nLeftRect, int nTopRect, int nRightRect, int nBottomRect, int nWidthEllipse, int nHeightEllipse);
 
+        private readonly IServiceProvider _serviceProvider = null!; // 📌 Campo adicionado para gerenciar DI
         private readonly UsuarioService _usuarioService = null!;
 
         public Cadastro()
@@ -25,9 +28,11 @@ namespace FormsHelp.UI
             CMB_Perfil.SelectedIndex = 0;
         }
 
-        public Cadastro(UsuarioService usuarioService) : this()
+        // 📌 CONSTRUTOR ATUALIZADO: Agora recebe o ServiceProvider do container de DI
+        public Cadastro(UsuarioService usuarioService, IServiceProvider serviceProvider) : this()
         {
             _usuarioService = usuarioService;
+            _serviceProvider = serviceProvider;
         }
 
         private void ArredondarComponentes()
@@ -39,45 +44,14 @@ namespace FormsHelp.UI
             BT_Cadastrar.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, BT_Cadastrar.Width, BT_Cadastrar.Height, 15, 15));
         }
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void CPF_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void Cadastro_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
+        private void label2_Click(object sender, EventArgs e) { }
+        private void label5_Click(object sender, EventArgs e) { }
+        private void label2_Click_1(object sender, EventArgs e) { }
+        private void CPF_Click(object sender, EventArgs e) { }
+        private void panel1_Paint(object sender, PaintEventArgs e) { }
+        private void panel2_Paint(object sender, PaintEventArgs e) { }
+        private void Cadastro_Load(object sender, EventArgs e) { }
+        private void label3_Click(object sender, EventArgs e) { }
 
         private void Cadastrar_Click(object sender, EventArgs e)
         {
@@ -89,6 +63,7 @@ namespace FormsHelp.UI
             CadastrarUsuario();
         }
 
+        // 📌 MÉTODO DE CADASTRO ATUALIZADO COM REDIRECIONAMENTO LOGO APÓS SALVAR
         private void CadastrarUsuario()
         {
             if (string.IsNullOrWhiteSpace(TB_Nome.Text) || string.IsNullOrWhiteSpace(TB_Email.Text) ||
@@ -109,15 +84,37 @@ namespace FormsHelp.UI
                     Perfil = ObterPerfilSelecionado()
                 };
 
+                // 1. Salva o usuário no banco de dados SQLite
                 _usuarioService.CriarUsuario(usuario);
+
+                // 2. Vincula o usuário recém-criado na sessão global do sistema
+                SessaoUsuario.UsuarioLogado = usuario;
 
                 MessageBox.Show("Usuário cadastrado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                // 3. Limpa os campos do formulário por segurança
                 TB_Nome.Clear();
                 TB_Email.Clear();
                 TB_CPF.Clear();
                 TB_Senha.Clear();
                 CMB_Perfil.SelectedIndex = 0;
+
+                // 4. 🚀 REDIRECIONAMENTO INTELIGENTE BASEADO NO PERFIL SELECIONADO
+                if (usuario.Perfil == Perfil.Analista)
+                {
+                    // Resolve e abre a tela do Dashboard de Analista
+                    var dashboardAnalista = _serviceProvider.GetRequiredService<DashboardAnalista>();
+                    dashboardAnalista.Show();
+                }
+                else
+                {
+                    // Resolve e abre a tela do Dashboard de Cliente
+                    var dashboardCliente = _serviceProvider.GetRequiredService<DashboardCliente>();
+                    dashboardCliente.Show();
+                }
+
+                // 5. Esconde a tela atual de cadastro
+                this.Hide();
             }
             catch (Exception ex)
             {
@@ -130,10 +127,7 @@ namespace FormsHelp.UI
             return CMB_Perfil.SelectedIndex == 1 ? Perfil.Analista : Perfil.Cliente;
         }
 
-        private void TB_Nome_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+        private void TB_Nome_TextChanged(object sender, EventArgs e) { }
 
         private void Cadastro_Resize(object sender, EventArgs e)
         {
@@ -174,17 +168,11 @@ namespace FormsHelp.UI
             label3.Left = Math.Max(40, (panel3.Width - label3.Width) / 2);
         }
 
-        private void pictureBox2_Click(object sender, EventArgs e)
-        {
+        private void pictureBox2_Click(object sender, EventArgs e) { }
+        private void panel3_Paint(object sender, PaintEventArgs e) { }
+        private void panel1_Paint_1(object sender, PaintEventArgs e) { }
 
-        }
-
-        private void panel3_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panel1_Paint_1(object sender, PaintEventArgs e)
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
 
         }

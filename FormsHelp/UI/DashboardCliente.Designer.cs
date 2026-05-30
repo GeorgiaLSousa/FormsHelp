@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DashboardCliente));
             panelHeader = new Panel();
             PB_IconeUsuario = new PictureBox();
             lbNomeUsuario = new Label();
@@ -38,13 +37,9 @@
             cmbStatus = new ComboBox();
             btNovoChamado = new Button();
             flowChamados = new FlowLayoutPanel();
-            cardChamado1 = new CardChamado();
-            cardChamado2 = new CardChamado();
-            cardChamado3 = new CardChamado();
             panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)PB_IconeUsuario).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PB_Logo).BeginInit();
-            flowChamados.SuspendLayout();
             SuspendLayout();
             // 
             // panelHeader
@@ -64,7 +59,6 @@
             // 
             PB_IconeUsuario.BackColor = Color.Transparent;
             PB_IconeUsuario.Dock = DockStyle.Right;
-            PB_IconeUsuario.Image = (Image)resources.GetObject("PB_IconeUsuario.Image");
             PB_IconeUsuario.Location = new Point(1118, 0);
             PB_IconeUsuario.Name = "PB_IconeUsuario";
             PB_IconeUsuario.Size = new Size(77, 105);
@@ -96,12 +90,13 @@
             lbTituloSistema.Size = new Size(241, 32);
             lbTituloSistema.TabIndex = 1;
             lbTituloSistema.Text = "HelpDesk Pro System";
+            lbTituloSistema.Click += lbTituloSistema_Click;
             // 
             // PB_Logo
             // 
             PB_Logo.BackColor = Color.Transparent;
             PB_Logo.Dock = DockStyle.Left;
-            PB_Logo.Image = Properties.Resources.logo;
+            PB_Logo.Image = Properties.Resources._2;
             PB_Logo.Location = new Point(0, 0);
             PB_Logo.Name = "PB_Logo";
             PB_Logo.Size = new Size(102, 105);
@@ -158,9 +153,6 @@
             flowChamados.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             flowChamados.AutoScroll = true;
             flowChamados.BackColor = Color.Transparent;
-            flowChamados.Controls.Add(cardChamado1);
-            flowChamados.Controls.Add(cardChamado2);
-            flowChamados.Controls.Add(cardChamado3);
             flowChamados.FlowDirection = FlowDirection.TopDown;
             flowChamados.Location = new Point(35, 200);
             flowChamados.Margin = new Padding(3, 2, 3, 2);
@@ -168,33 +160,7 @@
             flowChamados.Size = new Size(1108, 371);
             flowChamados.TabIndex = 4;
             flowChamados.WrapContents = false;
-            // 
-            // cardChamado1
-            // 
-            cardChamado1.BackColor = Color.FromArgb(17, 27, 58);
-            cardChamado1.Location = new Point(0, 0);
-            cardChamado1.Margin = new Padding(0, 0, 0, 8);
-            cardChamado1.Name = "cardChamado1";
-            cardChamado1.Size = new Size(1120, 116);
-            cardChamado1.TabIndex = 0;
-            // 
-            // cardChamado2
-            // 
-            cardChamado2.BackColor = Color.FromArgb(17, 27, 58);
-            cardChamado2.Location = new Point(0, 124);
-            cardChamado2.Margin = new Padding(0, 0, 0, 8);
-            cardChamado2.Name = "cardChamado2";
-            cardChamado2.Size = new Size(1120, 116);
-            cardChamado2.TabIndex = 1;
-            // 
-            // cardChamado3
-            // 
-            cardChamado3.BackColor = Color.FromArgb(17, 27, 58);
-            cardChamado3.Location = new Point(0, 248);
-            cardChamado3.Margin = new Padding(0, 0, 0, 8);
-            cardChamado3.Name = "cardChamado3";
-            cardChamado3.Size = new Size(1120, 116);
-            cardChamado3.TabIndex = 2;
+            flowChamados.Paint += flowChamados_Paint;
             // 
             // DashboardCliente
             // 
@@ -215,9 +181,8 @@
             Resize += DashboardCliente_Resize;
             panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
-//            ((System.ComponentModel.ISupportInitialize)PB_IconeUsuario).EndInit();
- //           ((System.ComponentModel.ISupportInitialize)PB_Logo).EndInit();
-            flowChamados.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)PB_IconeUsuario).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PB_Logo).EndInit();
             ResumeLayout(false);
         }
 

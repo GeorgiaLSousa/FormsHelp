@@ -82,6 +82,7 @@
             // pctLogo
             // 
             pctLogo.Dock = DockStyle.Left;
+            pctLogo.Image = Properties.Resources._2;
             pctLogo.Location = new Point(0, 0);
             pctLogo.Margin = new Padding(3, 2, 3, 2);
             pctLogo.Name = "pctLogo";
@@ -105,6 +106,7 @@
             // 
             // picAjuda
             // 
+            picAjuda.Image = Properties.Resources._1;
             picAjuda.Location = new Point(66, 135);
             picAjuda.Margin = new Padding(3, 2, 3, 2);
             picAjuda.Name = "picAjuda";
@@ -170,7 +172,7 @@
             // cmbCategoria
             // 
             cmbCategoria.FormattingEnabled = true;
-            cmbCategoria.Items.AddRange(new object[] { "Hardware", "Sistema", "Infraestrutura", "Redes", "Bug"});
+            cmbCategoria.Items.AddRange(new object[] { "Hardware", "Sistema", "Infraestrutura", "Redes", "Bug" });
             cmbCategoria.Location = new Point(65, 303);
             cmbCategoria.Name = "cmbCategoria";
             cmbCategoria.Size = new Size(351, 23);
@@ -179,7 +181,7 @@
             // cmbPrioridade
             // 
             cmbPrioridade.FormattingEnabled = true;
-            cmbPrioridade.Items.AddRange(new object[] { "Baixa", "Media", "Alta"});
+            cmbPrioridade.Items.AddRange(new object[] { "Baixa", "Media", "Alta" });
             cmbPrioridade.Location = new Point(65, 233);
             cmbPrioridade.Name = "cmbPrioridade";
             cmbPrioridade.Size = new Size(351, 23);

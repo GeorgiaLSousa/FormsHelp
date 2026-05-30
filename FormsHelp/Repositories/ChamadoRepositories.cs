@@ -93,44 +93,12 @@ namespace FormsHelp.Repositories
             return todos;
         }
 
-        public void AtualizarChamado(Chamado chamado, Usuario usuario)
+        public void AtualizarChamado(Chamado chamado)
         {
-            // Busca o chamado no banco já incluindo o relacionamento de analista
-            var chamadoExistente = _context.Chamados
-                .Include(c => c.Analista)
-                .FirstOrDefault(c => c.Id == chamado.Id);
-
-            if (chamadoExistente == null)
-            {
-                throw new Exception("Chamado não encontrado.");
-            }
-
-            // Permite ao analista assumir (adicionar) o chamado a ele
-            if (chamado.Analista != null && chamadoExistente.Analista == null)
-            {
-                atenderChamado(chamadoExistente.Id, chamado.Analista);
-            }
-
-            if (chamadoExistente.Analista == null)
-            {
-                throw new Exception("Os dados do chamado só podem ser atualizados após ser atribuído a um analista.");
-            }
-            else if (chamado.Analista == null || chamadoExistente.Analista.Id != chamado.Analista.Id)
-            {
-                throw new Exception("Você só pode atualizar os dados de um chamado que está atribuído a você.");
-            }
-
-            // Atualiza os campos liberados
-            chamadoExistente.Status = chamado.Status;
-            chamadoExistente.Prioridade = chamado.Prioridade;
-            chamadoExistente.Comentarios = chamado.Comentarios;
-
-            // Atualiza a data de alteração
-            chamadoExistente.DataAtualizacao = DateTime.Now;
-
+            // Como a entidade já foi buscada e alterada na Service, o EF faz o Update automático ao salvar
             _context.SaveChanges();
         }
-
+   
         public Chamado atenderChamado(long id, Usuario analista)
         {
             var chamadoExistente = _context.Chamados
@@ -171,6 +139,13 @@ namespace FormsHelp.Repositories
             return chamado;
         }
 
-       
+        public void DeletarChamado(Chamado chamado)
+        {
+            // Remove o objeto do set do EF e salva as alterações na tabela
+            _context.Chamados.Remove(chamado);
+            _context.SaveChanges();
+        }
+
+
     }
 }

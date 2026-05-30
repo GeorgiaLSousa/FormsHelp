@@ -36,7 +36,7 @@ namespace FormsHelp.UI
 
         private void cmbStatus_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            CarregarChamados();
         }
 
         private void DashboardCliente_Load(object sender, EventArgs e)
@@ -45,18 +45,15 @@ namespace FormsHelp.UI
             cmbStatus.Items.AddRange(new object[] { "Todos os chamados" });
             cmbStatus.SelectedIndex = 0;
 
-            // Amarração do evento de trava direto por código para evitar mexer no Designer
             this.ActiveControl = lbTituloPagina;
             AjustarCards();
             CarregarChamados();
+
             var usuario = SessaoUsuario.UsuarioLogado;
             lbNomeUsuario.Text = usuario?.Nome;
         }
 
-        private void lbTituloPagina_Click(object sender, EventArgs e)
-        {
-
-        }
+        private void lbTituloPagina_Click(object sender, EventArgs e) { }
 
         private void DashboardCliente_Resize(object sender, EventArgs e)
         {
@@ -69,7 +66,10 @@ namespace FormsHelp.UI
 
             foreach (Control controle in flowChamados.Controls)
             {
-                controle.Width = largura;
+                if (controle is CardChamado)
+                {
+                    controle.Width = largura;
+                }
             }
         }
 
@@ -86,10 +86,22 @@ namespace FormsHelp.UI
             {
                 var card = new CardChamado();
                 card.Width = Math.Max(600, flowChamados.ClientSize.Width - 24);
-                card.CarregarDados(chamado);
+
+                // 📌 Injeta as referências necessárias para o card abrir a tela correta
+                card.CarregarDados(chamado, _serviceProvider);
 
                 flowChamados.Controls.Add(card);
             }
         }
+
+        private void lbTituloSistema_Click(object sender, EventArgs e) { }
+
+        private void DashboardCliente_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            // Libera o processo travado da memória ao fechar no X
+            Application.Exit();
+        }
+
+        private void flowChamados_Paint(object sender, PaintEventArgs e) { }
     }
 }

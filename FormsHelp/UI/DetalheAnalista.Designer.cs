@@ -77,6 +77,7 @@
             label2 = new Label();
             label1 = new Label();
             btnAssumir = new Button();
+            lbVoltar = new Label();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -108,6 +109,7 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1370, 68);
             panel1.TabIndex = 0;
+            panel1.Paint += panel1_Paint;
             // 
             // label9
             // 
@@ -133,9 +135,10 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(28, 12);
+            pictureBox1.Image = Properties.Resources._2;
+            pictureBox1.Location = new Point(0, 0);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(30, 50);
+            pictureBox1.Size = new Size(68, 77);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;
@@ -637,12 +640,26 @@
             btnAssumir.TabIndex = 8;
             btnAssumir.Text = "Assumir Chamado";
             btnAssumir.UseVisualStyleBackColor = false;
+            btnAssumir.Click += btnAssumir_Click;
+            // 
+            // lbVoltar
+            // 
+            lbVoltar.AutoSize = true;
+            lbVoltar.Cursor = Cursors.Hand;
+            lbVoltar.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbVoltar.Location = new Point(23, 74);
+            lbVoltar.Name = "lbVoltar";
+            lbVoltar.Size = new Size(48, 45);
+            lbVoltar.TabIndex = 9;
+            lbVoltar.Text = "←";
+            lbVoltar.Click += lbVoltar_Click;
             // 
             // DetalheAnalista
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1366, 768);
+            Controls.Add(lbVoltar);
             Controls.Add(btnAssumir);
             Controls.Add(panel3);
             Controls.Add(pictureBox3);
@@ -674,6 +691,7 @@
             panel6.ResumeLayout(false);
             panel5.ResumeLayout(false);
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -727,5 +745,6 @@
         private Label label26;
         private Label label25;
         private Button btnAssumir;
+        private Label lbVoltar;
     }
 }

@@ -76,12 +76,14 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(16, 8);
+            pictureBox1.Image = Properties.Resources._2;
+            pictureBox1.Location = new Point(0, 0);
             pictureBox1.Margin = new Padding(2, 1, 2, 1);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(105, 39);
+            pictureBox1.Size = new Size(82, 72);
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
             // 
             // panel2
             // 
@@ -121,6 +123,7 @@
             // 
             // pictureBox2
             // 
+            pictureBox2.Image = Properties.Resources._1;
             pictureBox2.Location = new Point(103, 188);
             pictureBox2.Margin = new Padding(2, 1, 2, 1);
             pictureBox2.Name = "pictureBox2";
@@ -128,6 +131,7 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
+            pictureBox2.Click += pictureBox2_Click;
             // 
             // panel3
             // 

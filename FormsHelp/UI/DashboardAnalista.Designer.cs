@@ -1,5 +1,5 @@
-﻿namespace FormsHelp.UI 
-{ 
+﻿namespace FormsHelp.UI
+{
     partial class DashboardAnalista : Form
     {
         /// <summary>
@@ -34,16 +34,12 @@
             lblTituloSistema = new Label();
             picLogo = new PictureBox();
             lblTituloPagina = new Label();
-            cmbStatus = new ComboBox();
-            cmbAtendimento = new ComboBox();
+            btnAbertos = new Button();
+            btnMeusAtendimentos = new Button();
             flowChamados = new FlowLayoutPanel();
-            cardChamado1 = new CardChamado();
-            cardChamado2 = new CardChamado();
-            cardChamado3 = new CardChamado();
             panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picLogo).BeginInit();
-            flowChamados.SuspendLayout();
             SuspendLayout();
             // 
             // panelHeader
@@ -58,6 +54,7 @@
             panelHeader.Name = "panelHeader";
             panelHeader.Size = new Size(1195, 105);
             panelHeader.TabIndex = 0;
+            panelHeader.Paint += panelHeader_Paint;
             // 
             // pictureBox1
             // 
@@ -75,7 +72,7 @@
             lblUsuario.AutoSize = true;
             lblUsuario.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblUsuario.ForeColor = Color.White;
-            lblUsuario.Location = new Point(1034, 50);
+            lblUsuario.Location = new Point(1001, 50);
             lblUsuario.Name = "lblUsuario";
             lblUsuario.Size = new Size(86, 17);
             lblUsuario.TabIndex = 2;
@@ -95,6 +92,7 @@
             // picLogo
             // 
             picLogo.Dock = DockStyle.Left;
+            picLogo.Image = Properties.Resources._2;
             picLogo.Location = new Point(0, 0);
             picLogo.Name = "picLogo";
             picLogo.Size = new Size(120, 105);
@@ -114,80 +112,57 @@
             lblTituloPagina.TabIndex = 4;
             lblTituloPagina.Text = " Chamados";
             // 
-            // cmbStatus
+            // btnAbertos
             // 
-            cmbStatus.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbStatus.FlatStyle = FlatStyle.Flat;
-            cmbStatus.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cmbStatus.FormattingEnabled = true;
-            cmbStatus.Items.AddRange(new object[] { "Todos os status", "Aberto", "Em progresso", "Fechado" });
-            cmbStatus.Location = new Point(35, 180);
-            cmbStatus.Name = "cmbStatus";
-            cmbStatus.Size = new Size(160, 25);
-            cmbStatus.TabIndex = 5;
+            btnAbertos.BackColor = Color.FromArgb(17, 27, 58);
+            btnAbertos.Cursor = Cursors.Hand;
+            btnAbertos.FlatAppearance.BorderColor = Color.FromArgb(220, 225, 235);
+            btnAbertos.FlatStyle = FlatStyle.Flat;
+            btnAbertos.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnAbertos.ForeColor = Color.White;
+            btnAbertos.Location = new Point(35, 180);
+            btnAbertos.Name = "btnAbertos";
+            btnAbertos.Size = new Size(160, 30);
+            btnAbertos.TabIndex = 5;
+            btnAbertos.Text = "Abertos";
+            btnAbertos.UseVisualStyleBackColor = false;
+            btnAbertos.Click += btnAbertos_Click;
             // 
-            // cmbAtendimento
+            // btnMeusAtendimentos
             // 
-            cmbAtendimento.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbAtendimento.FlatStyle = FlatStyle.Flat;
-            cmbAtendimento.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cmbAtendimento.FormattingEnabled = true;
-            cmbAtendimento.Items.AddRange(new object[] { "Todos", "Meus atendimento" });
-            cmbAtendimento.Location = new Point(215, 180);
-            cmbAtendimento.Name = "cmbAtendimento";
-            cmbAtendimento.Size = new Size(170, 25);
-            cmbAtendimento.TabIndex = 6;
+            btnMeusAtendimentos.BackColor = Color.FromArgb(17, 27, 58);
+            btnMeusAtendimentos.Cursor = Cursors.Hand;
+            btnMeusAtendimentos.FlatAppearance.BorderColor = Color.FromArgb(220, 225, 235);
+            btnMeusAtendimentos.FlatStyle = FlatStyle.Flat;
+            btnMeusAtendimentos.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnMeusAtendimentos.ForeColor = Color.White;
+            btnMeusAtendimentos.Location = new Point(211, 180);
+            btnMeusAtendimentos.Name = "btnMeusAtendimentos";
+            btnMeusAtendimentos.Size = new Size(170, 30);
+            btnMeusAtendimentos.TabIndex = 6;
+            btnMeusAtendimentos.Text = "Meus Atendimentos";
+            btnMeusAtendimentos.UseVisualStyleBackColor = false;
+            btnMeusAtendimentos.Click += btnMeusAtendimentos_Click;
             // 
             // flowChamados
             // 
             flowChamados.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             flowChamados.AutoScroll = true;
-            flowChamados.Controls.Add(cardChamado1);
-            flowChamados.Controls.Add(cardChamado2);
-            flowChamados.Controls.Add(cardChamado3);
             flowChamados.FlowDirection = FlowDirection.TopDown;
-            flowChamados.Location = new Point(35, 211);
+            flowChamados.Location = new Point(35, 225);
             flowChamados.Name = "flowChamados";
-            flowChamados.Size = new Size(1123, 366);
+            flowChamados.Size = new Size(1123, 352);
             flowChamados.TabIndex = 7;
             flowChamados.WrapContents = false;
-            // 
-            // cardChamado1
-            // 
-            cardChamado1.BackColor = Color.FromArgb(17, 27, 58);
-            cardChamado1.Location = new Point(0, 0);
-            cardChamado1.Margin = new Padding(0, 0, 0, 8);
-            cardChamado1.Name = "cardChamado1";
-            cardChamado1.Size = new Size(1120, 116);
-            cardChamado1.TabIndex = 0;
-            // 
-            // cardChamado2
-            // 
-            cardChamado2.BackColor = Color.FromArgb(17, 27, 58);
-            cardChamado2.Location = new Point(0, 124);
-            cardChamado2.Margin = new Padding(0, 0, 0, 8);
-            cardChamado2.Name = "cardChamado2";
-            cardChamado2.Size = new Size(1120, 116);
-            cardChamado2.TabIndex = 1;
-            cardChamado2.Load += CardChamado2_Load;
-            // 
-            // cardChamado3
-            // 
-            cardChamado3.BackColor = Color.FromArgb(17, 27, 58);
-            cardChamado3.Location = new Point(0, 248);
-            cardChamado3.Margin = new Padding(0, 0, 0, 8);
-            cardChamado3.Name = "cardChamado3";
-            cardChamado3.Size = new Size(1120, 116);
-            cardChamado3.TabIndex = 2;
             // 
             // DashboardAnalista
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1195, 576);
+            ClientSize = new Size(1195, 600);
             Controls.Add(flowChamados);
-            Controls.Add(cmbAtendimento);
-            Controls.Add(cmbStatus);
+            Controls.Add(btnMeusAtendimentos);
+            Controls.Add(btnAbertos);
             Controls.Add(lblTituloPagina);
             Controls.Add(panelHeader);
             FormBorderStyle = FormBorderStyle.None;
@@ -200,9 +175,8 @@
             Resize += DashboardAnalista_Resize;
             panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
-//            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-//            ((System.ComponentModel.ISupportInitialize)picLogo).EndInit();
-            flowChamados.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picLogo).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -215,11 +189,8 @@
         private Label lblTituloSistema;
         private PictureBox picLogo;
         private Label lblTituloPagina;
-        private ComboBox cmbStatus;
-        private ComboBox cmbAtendimento;
+        private Button btnAbertos;
+        private Button btnMeusAtendimentos;
         private FlowLayoutPanel flowChamados;
-        private CardChamado cardChamado1;
-        private CardChamado cardChamado2;
-        private CardChamado cardChamado3;
     }
 }

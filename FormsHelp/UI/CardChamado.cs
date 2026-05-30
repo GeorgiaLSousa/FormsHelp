@@ -14,19 +14,14 @@ namespace FormsHelp.UI
 {
     public partial class CardChamado : UserControl
     {
-        private readonly IServiceProvider _serviceProvider = null!;
+        private IServiceProvider _serviceProvider = null!;
         private long _idChamadoAtual;
 
+        // Construtor padrão que o Windows Forms e o Designer usam
         public CardChamado()
         {
             InitializeComponent();
             AjustarLayout();
-        }
-
-        // Construtor que recebe o provedor de serviços do Dashboard
-        public CardChamado(IServiceProvider serviceProvider) : this()
-        {
-            _serviceProvider = serviceProvider;
         }
 
         private void CardChamado_Resize(object sender, EventArgs e)
@@ -50,9 +45,11 @@ namespace FormsHelp.UI
             lblInfo.Width = larguraTexto;
         }
 
-        public void CarregarDados(Chamado chamado)
+        // 📌 ATUALIZADO: Agora o método recebe o 'serviceProvider' junto com o chamado
+        public void CarregarDados(Chamado chamado, IServiceProvider serviceProvider)
         {
-            _idChamadoAtual = chamado.Id; // Salva o ID correto do chamado vindo do banco
+            _idChamadoAtual = chamado.Id;
+            _serviceProvider = serviceProvider; // 📌 Salvamos o provedor aqui de forma segura!
 
             lbTitulo.Text = chamado.Titulo;
             lblDescricao.Text = chamado.Descricao;
@@ -63,18 +60,27 @@ namespace FormsHelp.UI
 
         private void btnVerDetalhes_Click(object sender, EventArgs e)
         {
-            if (_idChamadoAtual <= 0) return;
+            if (_idChamadoAtual <= 0 || _serviceProvider == null) return;
 
             try
             {
-                // 1. Instancia ou resolve a tela de detalhes pelo Container de DI
-                var telaDetalhe = _serviceProvider.GetRequiredService<DetalheAnalista>();
+                var usuarioLogado = FormsHelp.Sessao.SessaoUsuario.UsuarioLogado;
 
-                // 2. Transmite o ID guardado neste Card para a nova tela
-                telaDetalhe.MapearIdChamado(_idChamadoAtual);
-
-                // 3. Exibe a tela de detalhes
-                telaDetalhe.Show();
+                // 📌 SEGURANÇA: Se não houver usuário logado ou se o perfil explicitamente NÃO for analista, abre a do cliente
+                if (usuarioLogado != null && usuarioLogado.Perfil == Perfil.Analista)
+                {
+                    // Resolve e abre a tela de detalhes com a visão do Analista (contendo o botão Assumir)
+                    var telaDetalheAnalista = _serviceProvider.GetRequiredService<DetalheAnalista>();
+                    telaDetalheAnalista.MapearIdChamado(_idChamadoAtual);
+                    telaDetalheAnalista.Show();
+                }
+                else
+                {
+                    // 🚀 CLIENTE: Resolve e abre a tela DetalhesUsuario (Layout arredondado de leitura)
+                    var telaDetalheCliente = _serviceProvider.GetRequiredService<DetalhesUsuario>();
+                    telaDetalheCliente.MapearIdChamado(_idChamadoAtual);
+                    telaDetalheCliente.Show();
+                }
             }
             catch (Exception ex)
             {
@@ -87,4 +93,3 @@ namespace FormsHelp.UI
         private void lblDescricao_Click(object sender, EventArgs e) { }
     }
 }
-

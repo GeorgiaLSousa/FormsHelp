@@ -28,16 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DetalhesUsuario));
             panel1 = new Panel();
             label9 = new Label();
             pictureBox2 = new PictureBox();
             pictureBox1 = new PictureBox();
-            pictureBox3 = new PictureBox();
             panel2 = new Panel();
             label24 = new Label();
             label23 = new Label();
-            label22 = new Label();
+            Responsavel = new Label();
             label21 = new Label();
             label20 = new Label();
             label19 = new Label();
@@ -60,12 +58,6 @@
             label8 = new Label();
             panel11 = new Panel();
             label7 = new Label();
-            panel10 = new Panel();
-            label29 = new Label();
-            label28 = new Label();
-            label27 = new Label();
-            label26 = new Label();
-            label25 = new Label();
             panel3 = new Panel();
             panel14 = new Panel();
             panel16 = new Panel();
@@ -75,14 +67,13 @@
             panel18 = new Panel();
             label33 = new Label();
             panel19 = new Panel();
-            label34 = new Label();
+            Status = new Label();
             label35 = new Label();
             btnVoltar = new Button();
             btnExcluir = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
@@ -91,7 +82,6 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             panel12.SuspendLayout();
             panel11.SuspendLayout();
-            panel10.SuspendLayout();
             panel3.SuspendLayout();
             panel14.SuspendLayout();
             panel16.SuspendLayout();
@@ -110,7 +100,6 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1370, 68);
             panel1.TabIndex = 2;
-            panel1.Paint += panel1_Paint;
             // 
             // label9
             // 
@@ -125,7 +114,6 @@
             // 
             // pictureBox2
             // 
-            pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
             pictureBox2.Location = new Point(1285, 12);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(59, 40);
@@ -135,30 +123,21 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(28, 12);
+            pictureBox1.Image = Properties.Resources._2;
+            pictureBox1.Location = new Point(0, 0);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(30, 50);
+            pictureBox1.Size = new Size(72, 76);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;
-            // 
-            // pictureBox3
-            // 
-            pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
-            pictureBox3.Location = new Point(0, 85);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(100, 50);
-            pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox3.TabIndex = 4;
-            pictureBox3.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
             // 
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(18, 25, 47);
             panel2.Controls.Add(label24);
             panel2.Controls.Add(label23);
-            panel2.Controls.Add(label22);
+            panel2.Controls.Add(Responsavel);
             panel2.Controls.Add(label21);
             panel2.Controls.Add(label20);
             panel2.Controls.Add(label19);
@@ -179,12 +158,11 @@
             panel2.Controls.Add(panel13);
             panel2.Controls.Add(panel12);
             panel2.Controls.Add(panel11);
-            panel2.Controls.Add(panel10);
             panel2.Location = new Point(28, 158);
             panel2.Name = "panel2";
             panel2.Size = new Size(846, 586);
             panel2.TabIndex = 5;
-            panel2.Paint += panel2_Paint;
+            panel2.Paint += panel2_Paint_1;
             // 
             // label24
             // 
@@ -208,15 +186,16 @@
             label23.TabIndex = 23;
             label23.Text = "Última Atualização";
             // 
-            // label22
+            // Responsavel
             // 
-            label22.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label22.ForeColor = Color.White;
-            label22.Location = new Point(560, 272);
-            label22.Name = "label22";
-            label22.Size = new Size(163, 26);
-            label22.TabIndex = 22;
-            label22.Text = "Georgia Ligia";
+            Responsavel.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Responsavel.ForeColor = Color.White;
+            Responsavel.Location = new Point(560, 272);
+            Responsavel.Name = "Responsavel";
+            Responsavel.Size = new Size(163, 26);
+            Responsavel.TabIndex = 22;
+            Responsavel.Text = "Georgia Ligia";
+            Responsavel.Click += label22_Click;
             // 
             // label21
             // 
@@ -290,7 +269,6 @@
             // 
             // pictureBox8
             // 
-            pictureBox8.Image = (Image)resources.GetObject("pictureBox8.Image");
             pictureBox8.Location = new Point(24, 404);
             pictureBox8.Name = "pictureBox8";
             pictureBox8.Size = new Size(23, 37);
@@ -300,7 +278,6 @@
             // 
             // pictureBox7
             // 
-            pictureBox7.Image = (Image)resources.GetObject("pictureBox7.Image");
             pictureBox7.Location = new Point(506, 333);
             pictureBox7.Name = "pictureBox7";
             pictureBox7.Size = new Size(23, 26);
@@ -309,7 +286,6 @@
             // 
             // pictureBox6
             // 
-            pictureBox6.Image = (Image)resources.GetObject("pictureBox6.Image");
             pictureBox6.Location = new Point(26, 333);
             pictureBox6.Name = "pictureBox6";
             pictureBox6.Size = new Size(23, 26);
@@ -319,7 +295,6 @@
             // 
             // pictureBox5
             // 
-            pictureBox5.Image = (Image)resources.GetObject("pictureBox5.Image");
             pictureBox5.Location = new Point(504, 263);
             pictureBox5.Name = "pictureBox5";
             pictureBox5.Size = new Size(25, 35);
@@ -329,7 +304,6 @@
             // 
             // pictureBox4
             // 
-            pictureBox4.Image = (Image)resources.GetObject("pictureBox4.Image");
             pictureBox4.Location = new Point(24, 263);
             pictureBox4.Name = "pictureBox4";
             pictureBox4.Size = new Size(25, 35);
@@ -345,7 +319,7 @@
             label14.Name = "label14";
             label14.Size = new Size(688, 47);
             label14.TabIndex = 9;
-            label14.Text = "Usuários estão relatando dificuldade para acessar o sistema. \r\nO botão de login não responde após inserir as credenciais.";
+            label14.Text = "Usuários estão relatando dificuldade para acessar o sistema. O botão de login não responde.";
             // 
             // label13
             // 
@@ -415,7 +389,6 @@
             label8.TabIndex = 0;
             label8.Text = "Alta";
             label8.TextAlign = ContentAlignment.MiddleCenter;
-            label8.Click += label8_Click;
             // 
             // panel11
             // 
@@ -436,76 +409,6 @@
             label7.TabIndex = 3;
             label7.Text = "Aberto";
             label7.TextAlign = ContentAlignment.MiddleCenter;
-            label7.Click += label7_Click;
-            // 
-            // panel10
-            // 
-            panel10.BackColor = Color.White;
-            panel10.Controls.Add(label29);
-            panel10.Controls.Add(label28);
-            panel10.Controls.Add(label27);
-            panel10.Controls.Add(label26);
-            panel10.Controls.Add(label25);
-            panel10.Location = new Point(14, 478);
-            panel10.Name = "panel10";
-            panel10.Size = new Size(817, 96);
-            panel10.TabIndex = 0;
-            panel10.Paint += panel10_Paint;
-            // 
-            // label29
-            // 
-            label29.AutoSize = true;
-            label29.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label29.ForeColor = Color.FromArgb(18, 25, 47);
-            label29.Location = new Point(446, 10);
-            label29.Name = "label29";
-            label29.Size = new Size(154, 20);
-            label29.TabIndex = 25;
-            label29.Text = "01/04/2026 às 16:30";
-            // 
-            // label28
-            // 
-            label28.AutoSize = true;
-            label28.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label28.ForeColor = Color.FromArgb(152, 145, 145);
-            label28.Location = new Point(386, 10);
-            label28.Name = "label28";
-            label28.Size = new Size(48, 20);
-            label28.TabIndex = 3;
-            label28.Text = "Data:";
-            // 
-            // label27
-            // 
-            label27.AutoSize = true;
-            label27.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label27.ForeColor = Color.FromArgb(18, 25, 47);
-            label27.Location = new Point(12, 38);
-            label27.Name = "label27";
-            label27.Size = new Size(404, 20);
-            label27.TabIndex = 2;
-            label27.Text = "Ajustamos o erro, e já está funcionando, poderia testar?\r\n";
-            // 
-            // label26
-            // 
-            label26.AutoSize = true;
-            label26.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label26.ForeColor = Color.FromArgb(18, 25, 47);
-            label26.Location = new Point(134, 10);
-            label26.Name = "label26";
-            label26.Size = new Size(103, 20);
-            label26.TabIndex = 1;
-            label26.Text = "Georgia Ligia";
-            // 
-            // label25
-            // 
-            label25.AutoSize = true;
-            label25.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label25.ForeColor = Color.FromArgb(152, 145, 145);
-            label25.Location = new Point(12, 10);
-            label25.Name = "label25";
-            label25.Size = new Size(105, 20);
-            label25.TabIndex = 0;
-            label25.Text = "Responsável:";
             // 
             // panel3
             // 
@@ -551,7 +454,6 @@
             label31.TabIndex = 0;
             label31.Text = "Alta";
             label31.TextAlign = ContentAlignment.MiddleCenter;
-            label31.Click += label31_Click;
             // 
             // panel17
             // 
@@ -573,7 +475,6 @@
             label32.TabIndex = 0;
             label32.Text = "Aberto";
             label32.TextAlign = ContentAlignment.MiddleCenter;
-            label32.Click += label32_Click;
             // 
             // panel18
             // 
@@ -594,28 +495,27 @@
             label33.TabIndex = 0;
             label33.Text = "Prioridade:";
             label33.TextAlign = ContentAlignment.MiddleCenter;
-            label33.Click += label33_Click;
             // 
             // panel19
             // 
             panel19.BackColor = Color.FromArgb(183, 187, 202);
-            panel19.Controls.Add(label34);
+            panel19.Controls.Add(Status);
             panel19.Location = new Point(25, 121);
             panel19.Name = "panel19";
             panel19.Size = new Size(179, 38);
             panel19.TabIndex = 1;
             panel19.Paint += panel19_Paint;
             // 
-            // label34
+            // Status
             // 
-            label34.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label34.Location = new Point(0, 0);
-            label34.Name = "label34";
-            label34.Size = new Size(176, 38);
-            label34.TabIndex = 0;
-            label34.Text = "Status:";
-            label34.TextAlign = ContentAlignment.MiddleCenter;
-            label34.Click += label34_Click;
+            Status.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Status.Location = new Point(0, 0);
+            Status.Name = "Status";
+            Status.Size = new Size(176, 38);
+            Status.TabIndex = 0;
+            Status.Text = "Status:";
+            Status.TextAlign = ContentAlignment.MiddleCenter;
+            Status.Click += label34_Click_1;
             // 
             // label35
             // 
@@ -659,6 +559,7 @@
             btnExcluir.TabIndex = 7;
             btnExcluir.Text = "Excluir";
             btnExcluir.UseVisualStyleBackColor = false;
+            btnExcluir.Click += btnExcluir_Click;
             // 
             // DetalhesUsuario
             // 
@@ -669,7 +570,6 @@
             Controls.Add(btnVoltar);
             Controls.Add(panel3);
             Controls.Add(panel2);
-            Controls.Add(pictureBox3);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "DetalhesUsuario";
@@ -678,7 +578,6 @@
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
@@ -688,8 +587,6 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             panel12.ResumeLayout(false);
             panel11.ResumeLayout(false);
-            panel10.ResumeLayout(false);
-            panel10.PerformLayout();
             panel3.ResumeLayout(false);
             panel14.ResumeLayout(false);
             panel16.ResumeLayout(false);
@@ -709,7 +606,7 @@
         private Panel panel2;
         private Label label24;
         private Label label23;
-        private Label label22;
+        private Label Responsavel;
         private Label label21;
         private Label label20;
         private Label label19;
@@ -732,12 +629,6 @@
         private Label label8;
         private Panel panel11;
         private Label label7;
-        private Panel panel10;
-        private Label label29;
-        private Label label28;
-        private Label label27;
-        private Label label26;
-        private Label label25;
         private Panel panel3;
         private Panel panel14;
         private Button btnVoltar;
@@ -748,8 +639,9 @@
         private Panel panel18;
         private Label label33;
         private Panel panel19;
-        private Label label34;
+        private Label Status;
         private Label label35;
         private Button btnExcluir;
+        private Label lbVoltar;
     }
 }

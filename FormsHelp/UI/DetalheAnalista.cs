@@ -1,4 +1,7 @@
-﻿using FormsHelp.Services;
+﻿
+using FormsHelp.Services;
+using FormsHelp.Sessao;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,11 +15,17 @@ namespace FormsHelp.UI
     public partial class DetalheAnalista : Form
     {
         private readonly ChamadoService _chamadoService;
+        private readonly IServiceProvider _serviceProvider;
+
         private long _idChamado; // 📌 Variável que armazena o ID enviado pelo Card
-        public DetalheAnalista(ChamadoService chamadoService)
+        private bool _jaEhDono = false; // 📌 Variável de controle de estado da tela
+
+        // 📌 CONSTRUTOR CORRIGIDO: Injeta tanto o Service quanto o Provider de Dependências
+        public DetalheAnalista(ChamadoService chamadoService, IServiceProvider serviceProvider)
         {
             InitializeComponent();
             _chamadoService = chamadoService;
+            _serviceProvider = serviceProvider;
         }
 
         public void MapearIdChamado(long id)
@@ -41,7 +50,7 @@ namespace FormsHelp.UI
                 label20.Text = chamado.Categoria.ToString();
 
                 label22.Text = chamado.Analista?.Nome ?? "Aguardando Analista...";
-                label24.Text = chamado.DataAtualizacao.ToString("dd/MM/yyyy 'às' HH:mm");
+                label24.Text = chamado.DataAtualizacao.Year == 1 ? "Sem atualizações" : chamado.DataAtualizacao.ToString("dd/MM/yyyy 'às' HH:mm");
 
                 // 📌 Preenche as labels informativas do painel lateral direito
                 label7.Text = chamado.Status.ToString();
@@ -49,12 +58,25 @@ namespace FormsHelp.UI
                 label4.Text = chamado.Status.ToString();
                 label5.Text = chamado.Prioridade.ToString();
 
-                // Desativa o botão de assumir caso um analista já seja dono dele
+                // 📌 VALIDAÇÃO DINÂMICA: Verifica se o analista logado é quem está atendendo
                 if (chamado.Analista != null)
                 {
-                    btnAssumir.Enabled = false;
-                    btnAssumir.Text = "Chamado em Atendimento";
-                    btnAssumir.BackColor = Color.Gray;
+                    if (SessaoUsuario.UsuarioLogado != null && chamado.Analista.Id == SessaoUsuario.UsuarioLogado.Id)
+                    {
+                        // Se for o próprio analista dono, muda o botão para o modo de edição
+                        _jaEhDono = true;
+                        btnAssumir.Enabled = true;
+                        btnAssumir.Text = "Atualizar Chamado";
+                        btnAssumir.BackColor = Color.FromArgb(41, 128, 185); // Cor Azul de Edição
+                    }
+                    else
+                    {
+                        // Se já tiver analista mas for outro profissional, tranca o botão
+                        _jaEhDono = false;
+                        btnAssumir.Enabled = false;
+                        btnAssumir.Text = "Em Atendimento por outro Analista";
+                        btnAssumir.BackColor = Color.Gray;
+                    }
                 }
             }
             catch (Exception ex)
@@ -68,60 +90,97 @@ namespace FormsHelp.UI
             this.Close(); // Fecha a tela de detalhes e volta para o Dashboard
         }
 
-        private void panel2_Paint(object sender, PaintEventArgs e)
+        // 📌 EVENTO DO BOTÃO INTELIGENTE: Assume ou abre a tela de edição dependendo do dono
+        // 📌 EVENTO DO BOTÃO INTELIGENTE: Assume ou abre a tela de edição dependendo do dono
+        private void btnAssumir_Click(object sender, EventArgs e)
         {
-            // 1. Criamos um caminho gráfico para desenhar a forma
-            System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
-            int raio = 20; // Ajuste este número para mais ou menos arredondado
+            if (_idChamado <= 0) return;
 
-            // 2. Desenhamos os arcos nos quatro cantos
-            gp.AddArc(0, 0, raio, raio, 180, 90);
-            gp.AddArc(this.panel2.Width - raio, 0, raio, raio, 270, 90);
-            gp.AddArc(this.panel2.Width - raio, this.panel2.Height - raio, raio, raio, 0, 90);
-            gp.AddArc(0, this.panel2.Height - raio, raio, raio, 90, 90);
+            try
+            {
+                if (_jaEhDono)
+                {
+                    // 🚀 CORREÇÃO PRINCIPAL: Cria a instância passando o ID direto no construtor pelo ActivatorUtilities
+                    // Isso elimina o uso do GetRequiredService tradicional e remove de vez a linha do MapearIdChamado
+                    var telaAtualizar = ActivatorUtilities.CreateInstance<AtualizarChamado>(_serviceProvider, _idChamado);
 
-            // 3. Fechamos a figura e aplicamos ao painel
-            gp.CloseFigure();
-            this.panel2.Region = new System.Drawing.Region(gp);
+                    telaAtualizar.Show();
+                    this.Close(); // Fecha a tela de leitura atual
+                }
+                else
+                {
+                    // CASO ESTEJA ABERTO: Executa a lógica de assumir o ticket
+                    var chamadoAtualizado = _chamadoService.AtenderChamado(_idChamado);
+
+                    MessageBox.Show("Você assumiu este chamado com sucesso! Ele agora está Em Andamento.", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    label22.Text = chamadoAtualizado.Analista?.Nome ?? SessaoUsuario.UsuarioLogado?.Nome ?? "Analista";
+                    label24.Text = chamadoAtualizado.DataAtualizacao.ToString("dd/MM/yyyy 'às' HH:mm");
+                    label7.Text = chamadoAtualizado.Status.ToString();
+                    label4.Text = chamadoAtualizado.Status.ToString();
+
+                    // Transforma o botão no modo de atualização imediatamente após assumir
+                    _jaEhDono = true;
+                    btnAssumir.Text = "Atualizar Chamado";
+                    btnAssumir.BackColor = Color.FromArgb(41, 128, 185);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Não foi possível processar a ação: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void panel3_Paint(object sender, PaintEventArgs e)
+        private void lbVoltar_Click(object sender, EventArgs e)
         {
-            // O 'sender' é o painel que está sendo pintado
+            this.Close();
+        }
+
+        // 📌 CORREÇÃO: Método adicionado para responder ao vínculo do arquivo Designer.cs
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+            // Pode ficar vazio, serve apenas para evitar o erro de referência
+        }
+
+        #region Renderização Gráfica Arredondada (Paints Corrigidos)
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
             if (sender is not Panel p) return;
-
             System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
-            int raio = 20; // Ajuste conforme necessário
-
+            int raio = 20;
             gp.AddArc(0, 0, raio, raio, 180, 90);
             gp.AddArc(p.Width - raio, 0, raio, raio, 270, 90);
             gp.AddArc(p.Width - raio, p.Height - raio, raio, raio, 0, 90);
             gp.AddArc(0, p.Height - raio, raio, raio, 90, 90);
-
             gp.CloseFigure();
             p.Region = new System.Drawing.Region(gp);
+        }
 
+        private void panel3_Paint(object sender, PaintEventArgs e)
+        {
+            if (sender is not Panel p) return;
+            System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
+            int raio = 20;
+            gp.AddArc(0, 0, raio, raio, 180, 90);
+            gp.AddArc(p.Width - raio, 0, raio, raio, 270, 90);
+            gp.AddArc(p.Width - raio, p.Height - raio, raio, raio, 0, 90);
+            gp.AddArc(0, p.Height - raio, raio, raio, 90, 90);
+            gp.CloseFigure();
+            p.Region = new System.Drawing.Region(gp);
         }
 
         private void panel4_Paint(object sender, PaintEventArgs e)
         {
-            // O 'sender' é o painel que está sendo pintado
             if (sender is not Panel p) return;
-
-            // Melhora a qualidade do desenho para não serrilhar
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-
             System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
             int raio = 20;
-
-            // Define o formato arredondado
             gp.AddArc(0, 0, raio, raio, 180, 90);
             gp.AddArc(p.Width - raio - 1, 0, raio, raio, 270, 90);
             gp.AddArc(p.Width - raio - 1, p.Height - raio - 1, raio, raio, 0, 90);
             gp.AddArc(0, p.Height - raio - 1, raio, raio, 90, 90);
             gp.CloseFigure();
-
-            // Pinta o fundo do painel e aplica o formato
             using (SolidBrush brush = new SolidBrush(p.BackColor))
             {
                 e.Graphics.FillPath(brush, gp);
@@ -132,18 +191,14 @@ namespace FormsHelp.UI
         private void panel5_Paint(object sender, PaintEventArgs e)
         {
             if (sender is not Panel p) return;
-
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-
             System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
             int raio = 20;
-
             gp.AddArc(0, 0, raio, raio, 180, 90);
             gp.AddArc(p.Width - raio - 1, 0, raio, raio, 270, 90);
             gp.AddArc(p.Width - raio - 1, p.Height - raio - 1, raio, raio, 0, 90);
             gp.AddArc(0, p.Height - raio - 1, raio, raio, 90, 90);
             gp.CloseFigure();
-
             using (SolidBrush brush = new SolidBrush(p.BackColor))
             {
                 e.Graphics.FillPath(brush, gp);
@@ -151,54 +206,17 @@ namespace FormsHelp.UI
             p.Region = new System.Drawing.Region(gp);
         }
 
-        private void label9_Click(object sender, EventArgs e)
-        {
+        #endregion
 
-        }
-
-        private void label11_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label12_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label14_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label21_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label26_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label29_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
+        private void label9_Click(object sender, EventArgs e) { }
+        private void label11_Click(object sender, EventArgs e) { }
+        private void label12_Click(object sender, EventArgs e) { }
+        private void label14_Click(object sender, EventArgs e) { }
+        private void pictureBox5_Click(object sender, EventArgs e) { }
+        private void pictureBox8_Click(object sender, EventArgs e) { }
+        private void label21_Click(object sender, EventArgs e) { }
+        private void label26_Click(object sender, EventArgs e) { }
+        private void label29_Click(object sender, EventArgs e) { }
+        private void label8_Click(object sender, EventArgs e) { }
     }
 }
